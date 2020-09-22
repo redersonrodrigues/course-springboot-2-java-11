@@ -12,7 +12,7 @@ import com.educandoweb.course.repositories.UserRepository;
 
 @Service
 public class UserService {
-
+	// dependencia com UserRepoository
 	@Autowired
 	private UserRepository repository;
 	
