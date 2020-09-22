@@ -8,16 +8,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 
 @Entity
 @Table(name = "tb_product")
-public class Product implements Serializable{
-	
+public class Product implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -25,15 +26,14 @@ public class Product implements Serializable{
 	private String description;
 	private Double price;
 	private String imgURL;
-	
-	
-	@Transient
-	//asssociação
-	private Set <Category> categories= new HashSet<>();
-	
-	
-	public Product() {}
 
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+	// asssociação
+	private Set<Category> categories = new HashSet<>();
+
+	public Product() {
+	}
 
 	public Product(Integer id, String name, String description, Double price, String imgURL) {
 		super();
@@ -44,61 +44,49 @@ public class Product implements Serializable{
 		this.imgURL = imgURL;
 	}
 
-
 	public Integer getId() {
 		return id;
 	}
-
 
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-
 	public String getName() {
 		return name;
 	}
-
 
 	public void setName(String name) {
 		this.name = name;
 	}
 
-
 	public String getDescription() {
 		return description;
 	}
-
 
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
-
 	public Double getPrice() {
 		return price;
 	}
-
 
 	public void setPrice(Double price) {
 		this.price = price;
 	}
 
-
 	public String getImgURL() {
 		return imgURL;
 	}
-
 
 	public void setImgURL(String imgURL) {
 		this.imgURL = imgURL;
 	}
 
-
 	public Set<Category> getCategories() {
 		return categories;
 	}
-
 
 	@Override
 	public int hashCode() {
@@ -107,7 +95,6 @@ public class Product implements Serializable{
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -125,6 +112,5 @@ public class Product implements Serializable{
 			return false;
 		return true;
 	}
-
 
 }
